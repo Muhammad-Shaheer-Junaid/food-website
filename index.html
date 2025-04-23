@@ -1,152 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign Up</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <title>Signup - Foodpanda</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
 
-        body {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #ff416c, #ff4b2b);
+    }
 
-        .signup-container {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            max-width: 400px;
-            width: 100%;
-            animation: fadeIn 1s ease-in-out;
-        }
+    .full-height {
+      height: 100vh;
+    }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
+    .left-panel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .right-panel {
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-        h2 {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: #333;
-        }
+    .signup-container {
+      background: #ffffff;
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 450px;
+      animation: slideUp 0.5s ease-in-out;
+    }
 
-        .input-group {
-            margin-bottom: 1rem;
-        }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        .input-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #555;
-            font-weight: 600;
-        }
+    .signup-container h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #333;
+      font-weight: 700;
+    }
 
-        .input-group input {
-            width: 100%;
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            border: 1px solid #ccc;
-            font-size: 1rem;
-        }
+    .form-label {
+      font-weight: 600;
+      color: #555;
+    }
 
-        .input-group input:focus {
-            border-color: #667eea;
-            outline: none;
-        }
+    .form-control {
+      padding: 0.75rem;
+      font-size: 1rem;
+      border-radius: 10px;
+    }
 
-        .submit-btn {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: #667eea;
-            color: white;
-            border: none;
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-        }
+    .input-group-text {
+      background-color: #f0f0f0;
+      border: none;
+    }
 
-        .submit-btn:hover {
-            background-color: #5a67d8;
-        }
+    .submit-btn {
+      background-color: #e21b70;
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: 0.3s;
+    }
 
-        .message {
-            margin-top: 1rem;
-            text-align: center;
-            font-size: 0.9rem;
-            color: green;
-        }
+    .submit-btn:hover {
+      background-color: #c2185b;
+    }
 
-        .link-text {
-            margin-top: 1rem;
-            text-align: center;
-            font-size: 0.9rem;
-        }
+    .link-text {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
 
-        .link-text a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: bold;
-        }
+    .link-text a {
+      color: #e21b70;
+      font-weight: 600;
+      text-decoration: none;
+    }
 
-        .link-text a:hover {
-            text-decoration: underline;
-        }
+    .link-text a:hover {
+      text-decoration: underline;
+    }
 
-        @media (max-width: 480px) {
-            .signup-container {
-                padding: 1.5rem;
-            }
-        }
-    </style>
+    .logo-img {
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .message {
+      margin-top: 0.5rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: green;
+    }
+
+    @media (max-width: 768px) {
+      .right-panel {
+        display: none;
+      }
+    }
+  </style>
 </head>
-
 <body>
-    <div class="signup-container">
-        <h2>Sign Up</h2>
-        <div id="signupForm">
-            <div class="input-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" placeholder="Enter username" />
+
+  <div class="container-fluid full-height">
+    <div class="row h-100">
+      <div class="col-md-6 left-panel">
+        <div class="signup-container">
+          <h2>Create Your Account</h2>
+          <div id="signupForm">
+            <div class="mb-3 input-group">
+              <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+              <input type="text" id="username" class="form-control" placeholder="Enter your name" />
             </div>
-            <div class="input-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="Enter email" />
+            <div class="mb-3 input-group">
+              <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+              <input type="email" id="email" class="form-control" placeholder="Enter your email" />
             </div>
-            <div class="input-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Enter password" />
+            <div class="mb-3 input-group">
+              <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+              <input type="password" id="password" class="form-control" placeholder="Enter your password" />
             </div>
             <button class="submit-btn" onclick="handleSignup()">Create Account</button>
             <div class="message" id="messageBox"></div>
-            <div class="link-text">
-                Already have an account? <a href="login.html">Login</a>
+            <div class="link-text mt-3">
+              Already have an account? <a href="login.html">Login</a>
             </div>
+          </div>
         </div>
+      </div>
+      <div class="col-md-6 right-panel">
+        <img src="panda-logo.webp" alt="Foodpanda Logo" class="logo-img">
+      </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script type="module" src="script.js"></script>
-</body>
+  </div>
 
+  <script type="module" src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
 </html>
 
 

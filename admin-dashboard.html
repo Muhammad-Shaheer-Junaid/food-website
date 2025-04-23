@@ -1,107 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Admin Dashboard</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
     body {
-      background-color: #f8f9fa;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f1f4f9;
     }
 
-    .dashboard {
-      max-width: 900px;
-      margin: 3rem auto;
-      padding: 2rem;
-      background-color: white;
-      border-radius: 1rem;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    .sidebar {
+      height: 100vh;
+      background-color: #1e293b;
+      color: #fff;
+    }
+
+    .sidebar a {
+      color: #cbd5e1;
+      text-decoration: none;
+      padding: 12px 20px;
+      display: block;
+      border-radius: 6px;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      background-color: #0f172a;
+      color: #fff;
+    }
+
+    .top-bar {
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: center;
     }
 
     .modal-header {
-      background-color: #0d6efd;
-      color: white;
+      background-color: #1e293b;
+      color: #fff;
     }
 
-    .form-label {
-      font-weight: 600;
+    .form-control:focus {
+      border-color: #1d4ed8;
+      box-shadow: 0 0 0 0.2rem rgba(29, 78, 216, 0.25);
+    }
+
+    .card {
+      margin: 10px;
+    }
+
+    .card .card-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card img {
+      height: 200px;
+      object-fit: cover;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        position: relative;
+        height: auto;
+      }
     }
   </style>
 </head>
+
 <body>
 
-  <div class="dashboard text-center">
-    <h2 class="mb-4">Admin Dashboard</h2>
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
-      Add Product
-    </button>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <nav class="col-md-3 col-lg-2 d-md-block sidebar py-4 px-3">
+        <h4 class="text-center mb-4">Admin Panel</h4>
+        <a href="#" class="active">Dashboard</a>
+        <a href="#">Products</a>
+        <a href="#">Orders</a>
+        <a href="#">Users</a>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5 pt-4">
+        <div class="top-bar d-flex justify-content-between align-items-center">
+          <!-- Centered Add Product button -->
+          <div class="flex-grow-1 text-center">
+            <button class="btn btn-primary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#addProductModal">
+              <i class="bi bi-plus-lg"></i> Add Product
+            </button>
+          </div>
+
+          <!-- Right-aligned Logout button -->
+          <div class="ms-auto">
+            <button onclick="logoutUser()" class="btn btn-outline-danger btn-lg">
+              <i class="bi bi-box-arrow-right"></i> Logout
+            </button>
+          </div>
+        </div>
+
+
+        <div class="content">
+          <div class="container my-5 row" id="product-list">
+            <!-- cards -->
+          </div>
+        </div>
+      </main>
+    </div>
   </div>
 
-  <!-- Modal -->
+  <!-- Add Product Modal -->
   <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content rounded-3">
         <div class="modal-header">
           <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-          <form id="productForm">
-            <div class="mb-3">
-              <label for="productId" class="form-label">Product ID</label>
-              <input type="text" class="form-control" id="productId" required>
+        <div id="productForm">
+          <div class="modal-body px-4">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="productId" class="form-label">Product ID</label>
+                <input type="text" class="form-control" id="productId" required />
+              </div>
+              <div class="col-md-6">
+                <label for="productName" class="form-label">Product Name</label>
+                <input type="text" class="form-control" id="productName" required />
+              </div>
+              <div class="col-md-6">
+                <label for="productPrice" class="form-label">Product Price</label>
+                <input type="number" class="form-control" id="productPrice" required />
+              </div>
+              <div class="col-md-6">
+                <label for="productImageUrl" class="form-label">Product Image URL</label>
+                <input type="url" class="form-control" id="productImageUrl" required />
+              </div>
+              <div class="col-12">
+                <label for="productDescription" class="form-label">Product Description</label>
+                <textarea class="form-control" id="productDescription" rows="3" required></textarea>
+              </div>
             </div>
-            <div class="mb-3">
-              <label for="productName" class="form-label">Product Name</label>
-              <input type="text" class="form-control" id="productName" required>
-            </div>
-            <div class="mb-3">
-              <label for="productPrice" class="form-label">Product Price ($)</label>
-              <input type="number" class="form-control" id="productPrice" required>
-            </div>
-            <div class="mb-3">
-              <label for="productDesc" class="form-label">Product Description</label>
-              <textarea class="form-control" id="productDesc" rows="3" required></textarea>
-            </div>
-            <div class="mb-3">
-              <label for="productImage" class="form-label">Product Image URL</label>
-              <input type="url" class="form-control" id="productImage" required>
-            </div>
-            <div class="d-grid">
-              <button type="submit" class="btn btn-success">Add Product</button>
-            </div>
-          </form>
+          </div>
+          <div class="modal-footer px-4 py-3">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button onclick="addProducts()" type="submit" class="btn btn-success">Add Product</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Bootstrap JS Bundle with Popper -->
+  <!-- Edit Product Modal -->
+  <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content rounded-3">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProductModalLabel">Edit Product</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div id="editProductForm">
+          <div class="modal-body px-4">
+            <div class="row g-3">
+              <input type="hidden" id="editProductId">
+              <div class="col-md-6">
+                <label for="editProductName" class="form-label">Product Name</label>
+                <input type="text" class="form-control" id="editProductName" required />
+              </div>
+              <div class="col-md-6">
+                <label for="editProductPrice" class="form-label">Product Price</label>
+                <input type="number" class="form-control" id="editProductPrice" required />
+              </div>
+              <div class="col-md-6">
+                <label for="editProductImageUrl" class="form-label">Product Image URL</label>
+                <input type="url" class="form-control" id="editProductImageUrl" required />
+              </div>
+              <div class="col-12">
+                <label for="editProductDescription" class="form-label">Product Description</label>
+                <textarea class="form-control" id="editProductDescription" rows="3" required></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer px-4 py-3">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button onclick="updateProduct()" type="submit" class="btn btn-success">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sweet Alert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Bootstrap JS & Icons -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
 
-  <!-- Custom Script -->
-  <script type="module">
-    document.getElementById('productForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const product = {
-        id: document.getElementById('productId').value,
-        name: document.getElementById('productName').value,
-        price: document.getElementById('productPrice').value,
-        description: document.getElementById('productDesc').value,
-        image: document.getElementById('productImage').value
-      };
-
-      console.log("✅ Product Added:", product);
-
-      // Optionally clear the form and close modal
-      this.reset();
-      const modal = bootstrap.Modal.getInstance(document.getElementById('addProductModal'));
-      modal.hide();
-    });
-  </script>
+  <!-- JavaScript Handling -->
+  <script type="module" src="script.js"></script>
 </body>
+
 </html>
